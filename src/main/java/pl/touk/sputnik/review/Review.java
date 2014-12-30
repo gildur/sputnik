@@ -48,13 +48,13 @@ public class Review {
     }
 
     @NotNull
-    public List<String> getBuildDirs() {
-        return Lists.transform(files, new ReviewFileBuildDirFunction());
+    public List<String> getBuildDirs(@NotNull FileFilter fileFilter) {
+        return Lists.transform(fileFilter.filter(files), new ReviewFileBuildDirFunction());
     }
 
     @NotNull
-    public List<String> getSourceDirs() {
-        return Lists.transform(files, new ReviewFileSourceDirFunction());
+    public List<String> getSourceDirs(@NotNull FileFilter fileFilter) {
+        return Lists.transform(fileFilter.filter(files), new ReviewFileSourceDirFunction());
     }
 
     public void addProblem(@NotNull String source, @NotNull String problem) {

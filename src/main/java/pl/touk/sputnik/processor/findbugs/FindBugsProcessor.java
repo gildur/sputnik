@@ -73,10 +73,12 @@ public class FindBugsProcessor implements ReviewProcessor {
     @NotNull
     private Project createProject(@NotNull Review review) {
         Project project = new Project();
-        for (String buildDir : review.getBuildDirs()) {
+        for (String buildDir : review.getBuildDirs(new JavaFilter())) {
+            log.debug("Add build dir: {}", buildDir);
             project.addFile(buildDir);
         }
-        for (String sourceDir : review.getSourceDirs()) {
+        for (String sourceDir : review.getSourceDirs(new JavaFilter())) {
+            log.debug("Add source dir: {}", sourceDir);
             project.addSourceDir(sourceDir);
         }
         return project;
@@ -86,6 +88,7 @@ public class FindBugsProcessor implements ReviewProcessor {
     private IClassScreener createClassScreener(@NotNull Review review) {
         ClassScreener classScreener = new ClassScreener();
         for (String javaClassName : review.getFiles(new JavaFilter(), new ClassNameTransformer())) {
+            log.debug("Add allowed class: {}", javaClassName);
             classScreener.addAllowedClass(javaClassName);
         }
         return classScreener;

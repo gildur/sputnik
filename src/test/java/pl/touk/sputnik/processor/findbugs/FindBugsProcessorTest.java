@@ -33,8 +33,8 @@ public class FindBugsProcessorTest extends TestEnvironment {
         //given
         List<String> file = ImmutableList.of("toreview.TestClass");
         when(review.getFiles(any(FileFilter.class), any(ClassNameTransformer.class))).thenReturn(file);
-        when(review.getBuildDirs()).thenReturn(ImmutableList.of("build/classes/test"));
-        when(review.getSourceDirs()).thenReturn(ImmutableList.of("src/test/java"));
+        when(review.getBuildDirs(any(FileFilter.class))).thenReturn(ImmutableList.of("build/classes/test"));
+        when(review.getSourceDirs(any(FileFilter.class))).thenReturn(ImmutableList.of("src/test/java"));
 
         //when
         ReviewResult reviewResult = findBugsProcessor.process(review);
